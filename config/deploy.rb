@@ -2,7 +2,7 @@
 set :application, 'travelweekly.dev'
 
 #set your repo url here
-set :repo_url, 'git@github.com:username/repository.git'
+set :repo_url, 'git@github.com:tony-was/travelweekly.git'
 
 set :branch, -> { `git rev-parse --abbrev-ref HEAD`.chomp }
 
