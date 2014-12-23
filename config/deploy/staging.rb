@@ -1,6 +1,6 @@
 set :application, 'staging.travelweekly.com.au'
 set :stage, :staging
-set :log_level, :debug
+set :log_level, :info
 
 #set remote server details
 server 'bambi.was-servers.com', user: 'staging', roles: %w{web app db}
