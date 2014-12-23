@@ -1,14 +1,16 @@
-set :stage, :production
-set :log_level, :info
+#set unique application name for staging and production to avoid permission problems when running deploy:check
+set :application, 'travelweekly.com.au'
+
+#set remote deploy path
+set :deploy_to, -> { "/home/travelweekly" }
 
 #set remote server details
-server 'server.url.or.ip', user: 'user', roles: %w{web app db}
+server '54.66.251.172', user: 'travelweekly', roles: %w{web app db}
 
+set :stage, :staging
+set :log_level, :info
 set :ssh_options, {
   keys: %w(~/.ssh/id_rsa)
 }
 
-#set remote deploy path
-set :deploy_to, -> { "/var/www/application" }
-
-fetch(:default_env).merge!(wp_env: :production)
+fetch(:default_env).merge!(wp_env: :staging)
