@@ -21,17 +21,6 @@ require 'dotenv'
 Dotenv.load
 
 namespace :deploy do
-  desc 'Restart application'
-  task :restart do
-    on roles(:app) do
-      sudo 'service', 'nginx', 'reload'
-    end
-  end
-end
-
-#after 'deploy:publishing', 'deploy:restart'
-
-namespace :deploy do
   desc 'Update WordPress template root paths to point to the new release'
   task :update_option_paths do
     on roles(:app) do
