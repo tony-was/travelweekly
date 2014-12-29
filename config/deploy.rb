@@ -20,6 +20,19 @@ set :linked_dirs, fetch(:linked_dirs, []).push('web/app/uploads')
 require 'dotenv'
 Dotenv.load
 
+namespace :apache2 do
+  desc 'Reload apache2'
+  task :reload do
+    on roles(:app) do
+      run_locally do
+        execute "ssh -i ~/.ssh/WASAU.pem ubuntu@#{fetch(:application)} sudo service apache2 restart"
+      end
+    end
+  end
+end
+
+after 'deploy:publishing', 'apache2:reload'
+
 namespace :deploy do
   desc 'Update WordPress template root paths to point to the new release'
   task :update_option_paths do

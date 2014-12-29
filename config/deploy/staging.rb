@@ -15,15 +15,4 @@ set :ssh_options, {
   keys: %w(~/.ssh/id_rsa)
 }
 
-namespace :apache2 do
-  desc 'Reload apache2'
-  task :reload do
-    on roles(:app) do
-      sudo '/etc/init.d/apache2 reload'
-    end
-  end
-end
-
-after 'deploy:publishing', 'apache2:reload'
-
 fetch(:default_env).merge!(wp_env: :staging)
