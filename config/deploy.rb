@@ -98,7 +98,7 @@ after 'deploy:publishing', 'grunt:build'
 set :base_db_filename, -> {"#{fetch(:application)}-#{Time.now.getutc.to_i}.sql"}
 set :wpcli_remote_db_file, -> {"#{fetch(:tmp_dir)}/#{fetch(:base_db_filename)}"}
 set :wpcli_local_db_file, -> {"/tmp/#{fetch(:base_db_filename)}"}
-set :vagrant_root, -> {"../../bedrock-ansible"}
+set :vagrant_root, -> {"../../homestead"}
 namespace :migrate do
   namespace :pull do
     desc "Downloads both remote database & syncs remote files into Vagrant"
@@ -115,7 +115,7 @@ namespace :migrate do
             within fetch(:vagrant_root) do
               execute :vagrant, :up
               execute "ssh -i ~/.vagrant.d/insecure_private_key vagrant@#{fetch(:dev_application)} 'mysql -u#{ENV['DB_USER']} -p#{ENV['DB_PASSWORD']} #{ENV['DB_NAME']}' < #{fetch(:wpcli_local_db_file)}"
-              execute "ssh -i ~/.vagrant.d/insecure_private_key vagrant@#{fetch(:dev_application)} 'cd /srv/www/#{fetch(:dev_application)}/current && wp search-replace #{fetch(:application)} #{fetch(:dev_application)}'"
+              execute "ssh -i ~/.vagrant.d/insecure_private_key vagrant@#{fetch(:dev_application)} 'cd /home/vagrant/sites/#{fetch(:dev_application)}/current && wp search-replace #{fetch(:application)} #{fetch(:dev_application)}'"
             end
             execute "rm #{fetch(:wpcli_local_db_file)}"
           end
